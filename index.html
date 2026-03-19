@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="{{APP_LANG}}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, interactive-widget=resizes-content, viewport-fit=cover">
+    <title>{{BRAND_NAME}}</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+Devanagari:wght@400;500;600&family=Geist+Mono:wght@500;600&display=swap" rel="stylesheet">
+    
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="light-mode theme-transition">
+
+    <div class="bg-logo-wrapper">
+        <img src="logo.png" alt="Background Logo" class="bg-logo-watermark">
+    </div>
+
+    <div id="offline-banner" class="offline-banner hidden">
+        <i data-lucide="wifi-off" size="16"></i>
+        <span>Oops! 🤖 I’m currently offline… probably grabbing some digital coffee. Try again in a moment!</span>
+    </div>
+
+    <div id="app-container">
+        
+        <header id="top-header" class="glass-header">
+            <button id="history-toggle" class="icon-btn"><i data-lucide="align-left"></i></button>
+            <div id="home-logo" class="brand-area" title="Navigate to Home Base">
+                <span class="brand-text">{{BRAND_NAME}}</span>
+            </div>
+            <button id="theme-toggle" class="icon-btn"><i data-lucide="moon"></i></button>
+        </header>
+
+        <main id="chat-canvas" class="scroll-hidden">
+            <div id="hero-section">
+                <div class="hero-content-open">
+                    <img src="logo.png" alt="{{BRAND_NAME}}" class="hero-logo-img">
+                </div>
+                
+                <div class="ai-chips-container">
+                    <button class="ai-chip"><i data-lucide="graduation-cap"></i> Admission Process & Criteria</button>
+                    <button class="ai-chip"><i data-lucide="calendar"></i> Exam Schedules & Results</button>
+                    <button class="ai-chip"><i data-lucide="credit-card"></i> Fee Structure & Online Payment</button>
+                    <button class="ai-chip"><i data-lucide="book-open"></i> Syllabus & Study Materials</button>
+                    <button class="ai-chip"><i data-lucide="bus"></i> Transport & Bus Routes</button>
+                    <button class="ai-chip"><i data-lucide="medal"></i> Sports & Extracurriculars</button>
+                    <button class="ai-chip"><i data-lucide="users"></i> Faculty & Staff Directory</button>
+                    <button class="ai-chip"><i data-lucide="bell"></i> Notice Board & Announcements</button>
+                    <button class="ai-chip"><i data-lucide="coffee"></i> Canteen Menu & Timings</button>
+                    <button class="ai-chip"><i data-lucide="help-circle"></i> General Help & Support</button>
+                </div>
+            </div>
+            
+            <div id="messages-container" class="hidden"></div>
+            
+            <div id="loading-indicator" class="loading-container hidden">
+                <div class="liquid-loader">
+                    <div class="loader-bar"></div>
+                    <div class="loader-bar"></div>
+                    <div class="loader-bar"></div>
+                </div>
+                <span class="loading-text" id="loading-status-text">{{LOADING_TEXT}}</span>
+            </div>
+        </main>
+
+        <footer id="bottom-dock">
+            <div id="search-bar-trigger" class="glass-search-bar">
+                
+                <div class="search-content">
+                    <i data-lucide="search" class="search-icon"></i>
+                    <div class="typewriter-container">
+                        <span id="typewriter-text" class="placeholder-text"></span><span class="cursor">|</span>
+                    </div>
+                </div>
+
+                <div class="search-actions">
+                    <button id="dock-mic-btn" class="action-btn" title="Voice Input"><i data-lucide="mic"></i></button>
+                    </div>
+            </div>
+        </footer>
+    </div>
+
+    <div id="sidebar-backdrop" class="modal-backdrop hidden"></div>
+    <aside id="sidebar" class="liquid-sidebar hidden">
+        <div class="sidebar-header">
+            <span class="sidebar-title"><i data-lucide="history" size="18"></i> HISTORY</span>
+            <button id="close-sidebar" class="icon-btn-glass-sm"><i data-lucide="x" size="18"></i></button>
+        </div>
+        <div id="history-list" class="scroll-hidden"></div>
+    </aside>
+
+    <div id="input-popup-backdrop" class="modal-backdrop hidden">
+        <div id="input-popup-sheet" class="apple-sheet glass-morph">
+            <div class="sheet-header">
+                <div class="drag-handle"></div>
+                <div class="sheet-controls">
+                    <button id="web-search-toggle" class="mode-badge" title="Live Web Search">
+                        <i data-lucide="globe" size="14"></i> <span id="web-search-label">Web Search: Off</span>
+                    </button>
+                    <button id="close-popup-btn" class="icon-btn-glass-sm"><i data-lucide="x" size="18"></i></button>
+                </div>
+            </div>
+            
+            <div class="sheet-body">
+                <div id="image-preview-container" class="preview-container hidden">
+                    <img id="image-preview" src="" alt="Selected Image">
+                    <button id="remove-image-btn" class="remove-btn"><i data-lucide="x" size="14"></i></button>
+                </div>
+                
+                <textarea id="main-textarea" class="scroll-hidden" placeholder="Type before I fall asleep 🤖"></textarea>
+            </div>
+            
+            <div class="sheet-footer">
+                <div class="footer-left-actions">
+                    <input type="file" id="image-upload-input" accept="image/*" class="hidden">
+                    <button id="popup-attach-btn" class="icon-btn-solid" title="Attach Image"><i data-lucide="paperclip"></i></button>
+                    
+                    <button id="popup-mic-btn" class="icon-btn-solid" title="Voice Input"><i data-lucide="mic"></i></button>
+                    <span id="char-counter" class="char-count-text">0/2000</span>
+                </div>
+                <button id="send-btn" class="send-btn"><i data-lucide="arrow-up" size="22"></i></button>
+            </div>
+        </div>
+    </div>
+
+    <div id="toast-container" class="toast-container"></div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    
+    <script src="manifest.js"></script>
+<script src="core.js"></script>
+<script>lucide.createIcons();</script>
+</body>
+</html>
